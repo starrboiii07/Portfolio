@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space-Themed Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000 0%, #0a0a2a 50%, #1a1a3a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #6b8cff, #4ecdc4, #45b7d1, #c46bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradient 8s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-20px); }
+            100% { transform: translatey(0px); }
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #6b8cff, #4ecdc4);
+            border-radius: 10px;
+        }
+        
+        .portfolio-item {
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .skill-bar {
+            transition: width 2s ease-in-out;
+        }
+        
+        /* =========================
+       PRELOADER STYLES
+    ========================== */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+      color: white;
+    }
+
+    .spinning-galaxy {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+
+    .spinning-galaxy:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+      animation: pulse 2s infinite alternate;
+    }
+
+    .spinning-galaxy:after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      from { transform: scale(0.8); opacity: 0.7; }
+      to { transform: scale(1.1); opacity: 1; }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .particle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: twinkle 4s infinite;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      50% { opacity: 0.8; }
+      100% { opacity: 0.2; }
+    }
+
+    /* Loader Particles Container */
+    #particles-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
+    }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #6b8cff, #4ecdc4);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .section-transition {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Space theme additions */
+        .space-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+        
+        .moon {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #cccccc, #888888);
+        }
+        
+        .saturn-ring {
+            position: absolute;
+            width: 180%;
+            height: 20%;
+            background: linear-gradient(to right, transparent, rgba(210, 180, 140, 0.7), transparent);
+            border-radius: 50%;
+            transform: translate(-22%, -50%) rotateX(75deg);
+        }
+        
+        .rocket {
+            position: absolute;
+            animation: rocket-flight 20s linear infinite;
+        }
+        
+        @keyframes rocket-flight {
+            0% { transform: translate(-100vw, 100vh) rotate(45deg); }
+            100% { transform: translate(100vw, -100vh) rotate(45deg); }
+        }
+        
+        .shooting-star {
+            position: absolute;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+            animation: shooting 5s infinite;
+        }
+        
+        @keyframes shooting {
+            0% { transform: translate(0, 0) rotate(45deg); opacity: 0; }
+            1% { opacity: 1; }
+            10% { transform: translate(500px, -500px) rotate(45deg); opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        /* Skill Galaxy Styles */
+        .space-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .space-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(white, rgba(255, 255, 255, 0) 2px),
+                radial-gradient(white, rgba(255, 255, 255, 0) 1px);
+            background-size: 50px 50px, 30px 30px;
+            background-position: 0 0, 25px 25px;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .skill-bubble {
+            background: rgba(45, 45, 90, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-bubble::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, #6b8cff, #4ecdc4, #45b7d1, #c46bff);
+            border-radius: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .skill-bubble:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .skill-bubble:hover::before {
+            opacity: 1;
+        }
+        
+        .skill-bubble:hover i {
+            transform: scale(1.2);
+        }
+        
+        .skill-bubble i {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Shooting stars animation for skills section */
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+        
+        .shooting-star-skill {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+            animation: shootingStar 3s infinite;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Space Background Elements -->
+    <div id="space-stars" class="space-stars"></div>
+    
+    <div class="galaxy-loader" id="loader">
+    <div class="loader-content">
+      <div class="spinning-galaxy"></div>
+      <h1 class="text-4xl font-bold mb-2">Esthephene Zyrus</h1>
+      <p class="text-xl">UI/UX Designer</p>
+    </div>
+    <div class="absolute inset-0 overflow-hidden" id="particles-container"></div>
+  </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 bg-opacity-90 bg-[#0a0a2a] backdrop-blur-md py-4 px-6 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold gradient-text">SPACE PORTFOLIO</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Home</a>
+                <a href="#about" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">About</a>
+                <a href="#skills" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Skills</a>
+                <a href="#portfolio" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Portfolio</a>
+                <a href="#contact" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white">
+                    <i data-feather="menu"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-[#1a1a3a] py-4 px-6 shadow-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Home</a>
+                <a href="#about" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">About</a>
+                <a href="#skills" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Skills</a>
+                <a href="#portfolio" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Portfolio</a>
+                <a href="#contact" class="nav-link text-white hover:text-[#4ecdc4] transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div id="vanta-background" class="absolute inset-0"></div>
+        <div class="container mx-auto px-6 z-10 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6" data-aos="fade-down">
+                Hello, I'm <span class="gradient-text">Cosmic Designer</span>
+            </h1>
+            <h2 class="text-2xl md:text-4xl mb-8" data-aos="fade-down" data-aos-delay="200">
+                UI/UX Designer & Space Explorer
+            </h2>
+            <p class="text-xl max-w-2xl mx-auto mb-10 opacity-90" data-aos="fade-up" data-aos-delay="400">
+                I craft interstellar digital experiences that blend creativity with functionality
+            </p>
+            <div class="flex justify-center space-x-6" data-aos="zoom-in" data-aos-delay="600">
+                <a href="#portfolio" class="px-8 py-3 bg-gradient-to-r from-[#6b8cff] to-[#4ecdc4] rounded-full font-semibold text-white hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+                    View Work
+                </a>
+                <a href="#contact" class="px-8 py-3 border-2 border-white rounded-full font-semibold text-white hover:bg-white hover:text-[#0a0a2a] transition-all duration-300">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-feather="chevron-down" class="text-white w-8 h-8"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-down">About Me</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative" data-aos="fade-right">
+                    <div class="floating w-4/5 mx-auto">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Profile" class="rounded-2xl shadow-2xl w-full">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-gradient-to-r from-[#6b8cff] to-[#4ecdc4] opacity-20 blur-xl"></div>
+                </div>
+                <div data-aos="fade-left" data-aos-delay="200">
+                    <h3 class="text-2xl font-semibold mb-6">Exploring Digital Universes</h3>
+                    <p class="text-lg opacity-90 mb-6">
+                        With over 5 years of experience in UI/UX design, I specialize in creating intuitive and engaging digital products that users love. My approach combines user-centered design principles with cutting-edge technology.
+                    </p>
+                    <p class="text-lg opacity-90 mb-8">
+                        I believe that great design is not just about how things look, but how they work and feel. Every pixel, interaction, and animation serves a purpose in creating memorable experiences.
+                    </p>
+                    <div class="flex space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-[#4ecdc4]"></div>
+                            <span>UI/UX Design</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-[#6b8cff]"></div>
+                            <span>Product Design</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-[#45b7d1]"></div>
+                            <span>Frontend Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="relative z-10 py-20 px-4 md:px-12 space-bg">
+        <!-- Shooting stars -->
+        <div class="shooting-star-skill" style="top: 20%; left: 10%; width: 100px; animation-delay: 0s;"></div>
+        <div class="shooting-star-skill" style="top: 40%; left: 0%; width: 150px; animation-delay: 1.5s;"></div>
+        <div class="shooting-star-skill" style="top: 70%; left: 5%; width: 120px; animation-delay: 2.7s;"></div>
+        
+        <div class="max-w-6xl mx-auto" data-aos="fade-up">
+            <h2 class="text-4xl font-bold text-white text-center mb-16">My <span class="gradient-text">Skill Galaxy</span></h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="100">
+                    <i data-feather="layout" class="w-12 h-12 text-purple-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">Web Design</h3>
+                </div>
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="200">
+                    <i data-feather="code" class="w-12 h-12 text-blue-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">HTML/CSS/JS</h3>
+                </div>
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="300">
+                    <i data-feather="cpu" class="w-12 h-12 text-green-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">React</h3>
+                </div>
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="400">
+                    <i data-feather="server" class="w-12 h-12 text-yellow-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">Node.js</h3>
+                </div>
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="100">
+                    <i data-feather="shopping-bag" class="w-12 h-12 text-pink-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">Shopify</h3>
+                </div>
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="200">
+                    <i data-feather="image" class="w-12 h-12 text-red-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">Canva/Photoshop</h3>
+                </div>
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="300">
+                    <i data-feather="grid" class="w-12 h-12 text-indigo-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">WordPress</h3>
+                </div>
+                <div class="skill-bubble p-6 rounded-2xl text-center" data-aos="zoom-in" data-aos-delay="400">
+                    <i data-feather="figma" class="w-12 h-12 text-teal-400 mx-auto mb-4"></i>
+                    <h3 class="text-white font-bold">Figma</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-down">My Portfolio</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Portfolio Item 1 -->
+                <div class="portfolio-item bg-[#2d2d5a] rounded-2xl overflow-hidden shadow-lg" data-aos="zoom-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Project 1" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Space Exploration App</h3>
+                        <p class="opacity-90 mb-4">UI/UX design for astronomy learning platform</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">UI Design</span>
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">UX Research</span>
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">Prototyping</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 2 -->
+                <div class="portfolio-item bg-[#2d2d5a] rounded-2xl overflow-hidden shadow-lg" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80" alt="Project 2" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Astro Banking App</h3>
+                        <p class="opacity-90 mb-4">Space-themed financial application with enhanced security</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">Mobile Design</span>
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">User Testing</span>
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">iOS & Android</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 3 -->
+                <div class="portfolio-item bg-[#2d2d5a] rounded-2xl overflow-hidden shadow-lg" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Project 3" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">NASA Dashboard</h3>
+                        <p class="opacity-90 mb-4">Data visualization for space mission tracking</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">Dashboard</span>
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">Data Viz</span>
+                            <span class="px-3 py-1 bg-[#1a1a3a] rounded-full text-sm">Space Tech</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-[#1a1a3a] relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-down">Get In Touch</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-semibold mb-6">Let's create something cosmic together</h3>
+                    <p class="text-lg opacity-90 mb-8">
+                        I'm always interested in new challenges and opportunities to create meaningful digital experiences. Whether you have a project in mind or just want to say hello, feel free to reach out!
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-full bg-[#2d2d5a] flex items-center justify-center">
+                                <i data-feather="mail" class="text-[#4ecdc4]"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Email</p>
+                                <p class="opacity-90">space.designer@example.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-full bg-[#2d2d5a] flex items-center justify-center">
+                                <i data-feather="phone" class="text-[#6b8cff]"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Phone</p>
+                                <p class="opacity-90">+1 (234) 567-8901</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-full bg-[#2d2d5a] flex items-center justify-center">
+                                <i data-feather="map-pin" class="text-[#45b7d1]"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Location</p>
+                                <p class="opacity-90">Orbiting Earth</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-8">
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#4ecdc4] transition-colors">
+                            <i data-feather="github" class="text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#6b8cff] transition-colors">
+                            <i data-feather="dribbble" class="text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#45b7d1] transition-colors">
+                            <i data-feather="linkedin" class="text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#96ceb4] transition-colors">
+                            <i data-feather="twitter" class="text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                <div data-aos="fade-left" data-aos-delay="200">
+                    <form class="bg-[#2d2d5a] p-8 rounded-2xl shadow-lg">
+                        <div class="mb-6">
+                            <label for="name" class="block mb-2 font-medium">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 bg-[#1a1a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4ecdc4] transition-all" placeholder="Your name">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block mb-2 font-medium">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-[#1a1a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4ecdc4] transition-all" placeholder="Your email">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block mb-2 font-medium">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 bg-[#1a1a3a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4ecdc4] transition-all" placeholder="Your message"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-[#6b8cff] to-[#4ecdc4] rounded-lg font-semibold text-white hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-[#0a0a2a] text-center">
+        <div class="container mx-auto px-6">
+            <p class="opacity-90">© 2023 Space Designer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Preloader with particles
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create stars for background
+            const spaceStars = document.getElementById('space-stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                star.style.animationDuration = Math.random() * 3 + 3 + 's';
+                spaceStars.appendChild(star);
+            }
+            
+            // Create shooting stars
+            for (let i = 0; i < 5; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                shootingStar.style.width = Math.random() * 100 + 50 + 'px';
+                shootingStar.style.height = '2px';
+                shootingStar.style.left = Math.random() * 100 + '%';
+                shootingStar.style.top = Math.random() * 100 + '%';
+                shootingStar.style.animationDelay = Math.random() * 10 + 's';
+                shootingStar.style.animationDuration = Math.random() * 3 + 2 + 's';
+                spaceStars.appendChild(shootingStar);
+            }
+            
+            // Create particles for preloader
+            const particlesContainer = document.getElementById('particles-container');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Hide preloader after 3 seconds
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.classList.add('hidden'); // Uses CSS transition
+            }, 3000);
+
+            
+            // Initialize Vanta.js for hero background
+            if (typeof VANTA !== 'undefined') {
+                VANTA.DOTS({
+                    el: "#vanta-background",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: 0x4ecdc4,
+                    color2: 0x6b8cff,
+                    backgroundColor: 0x0a0a2a,
+                    size: 2.30,
+                    spacing: 40.00
+                });
+            }
+            
+            // Initialize AOS
+            AOS.init({
+                duration: 1000,
+                once: true,
+                easing: 'ease-in-out'
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Replace feather icons
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+        });
+    </script>
+</body>
+</html>
