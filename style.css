@@ -920,3 +920,21 @@
             transform: translateY(0) scale(1);
         }
 
+        @media (max-width: 640px) {
+            html, body {
+                scroll-snap-type: none !important;
+            }
+            section {
+                scroll-snap-align: none !important;
+                min-height: unset !important;
+                height: auto !important;
+                padding-top: 52px !important; /* keep space for nav */
+                display: block !important;
+            }
+            section > .container,
+            section > .max-w-6xl {
+                min-height: unset !important;
+                height: auto !important;
+                display: block !important;
+            }
+        }
