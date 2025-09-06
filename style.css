@@ -921,20 +921,30 @@
         }
 
         @media (max-width: 640px) {
-            html, body {
-                scroll-snap-type: none !important;
-            }
-            section {
-                scroll-snap-align: none !important;
-                min-height: unset !important;
-                height: auto !important;
-                padding-top: 52px !important; /* keep space for nav */
-                display: block !important;
-            }
-            section > .container,
-            section > .max-w-6xl {
-                min-height: unset !important;
-                height: auto !important;
-                display: block !important;
-            }
+        html, body {
+            scroll-snap-type: none !important;
+        }
+        section {
+            scroll-snap-align: none !important;
+            min-height: unset !important;
+            height: auto !important;
+            padding-top: 52px !important;
+            display: block !important;
+            background: none !important;
+            box-shadow: none !important;
+        }
+        section > .container,
+        section > .max-w-6xl {
+            min-height: unset !important;
+            height: auto !important;
+            display: block !important;
+            background: none !important;
+            box-shadow: none !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
         }
