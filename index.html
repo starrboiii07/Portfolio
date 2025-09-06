@@ -8,679 +8,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Space Grotesk', sans-serif;
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3a 50%, #2d2d5a 100%);
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-        
-        /* ======================
-           GALAXY PRELOADER
-        ====================== */
-        #loader {
-          position: fixed;
-          inset: 0;
-          background: #0c0c2e;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          z-index: 9999;
-          transition: opacity 1s ease, visibility 1s ease;
-          overflow: hidden;
-        }
-
-        #loader.hidden {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        .cartoon-galaxy {
-          width: 150px;
-          height: 150px;
-          margin-bottom: 20px;
-          position: relative;
-          animation: bounce 2s infinite alternate;
-          z-index: 2;
-        }
-
-        .cartoon-galaxy:before {
-          content: '';
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-          background: radial-gradient(circle, #ff9ee0 0%, #c95bc2 30%, #8a54d0 70%);
-          box-shadow: 0 0 30px #c95bc2, 0 0 60px #8a54d0;
-          animation: spin 15s linear infinite;
-        }
-
-        .cartoon-galaxy:after {
-          content: '';
-          position: absolute;
-          top: -15px;
-          left: -15px;
-          right: -15px;
-          bottom: -15px;
-          border: 4px dotted rgba(255, 255, 255, 0.5);
-          border-radius: 50%;
-          animation: spinReverse 25s linear infinite;
-        }
-
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-
-        @keyframes spinReverse {
-          to { transform: rotate(-360deg); }
-        }
-
-        @keyframes bounce {
-          0% { transform: translateY(0px); }
-          100% { transform: translateY(-20px); }
-        }
-
-        /* Loader Particles */
-        #particles-container {
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          z-index: 1;
-        }
-
-        .particle {
-          position: absolute;
-          background: white;
-          border-radius: 50%;
-          opacity: 0.6;
-          animation: floatParticle linear infinite;
-        }
-
-        @keyframes floatParticle {
-          0% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-          50% { opacity: 1; }
-          100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
-        }
-        
-        /* Preloader Rocket */
-        .preloader-rocket {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            z-index: 3;
-            animation: preloader-rocket 15s linear infinite;
-        }
-        
-        @keyframes preloader-rocket {
-            0% { transform: translate(-100vw, 100vh) rotate(45deg); }
-            100% { transform: translate(100vw, -100vh) rotate(45deg); }
-        }
-        
-        .rocket-body {
-            width: 20px;
-            height: 40px;
-            background: linear-gradient(to bottom, #aaa, #777);
-            position: absolute;
-            border-radius: 40% 40% 10% 10%;
-        }
-        
-        .rocket-fin-left, .rocket-fin-right {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 16px solid #777;
-            bottom: 0;
-        }
-        
-        .rocket-fin-left {
-            left: -4px;
-            transform: rotate(30deg);
-        }
-        
-        .rocket-fin-right {
-            right: -4px;
-            transform: rotate(-30deg);
-        }
-        
-        .rocket-window {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #7ec8e3;
-            border-radius: 50%;
-            top: 12px;
-            left: 6px;
-            box-shadow: 0 0 5px #7ec8e3;
-        }
-        
-        .rocket-flame {
-            position: absolute;
-            width: 5px;
-            height: 20px;
-            background: linear-gradient(to bottom, #e67e22, #d35400, transparent);
-            bottom: -18px;
-            left: 7.5px;
-            border-radius: 50% 50% 20% 20%;
-            animation: flame 0.5s infinite alternate;
-        }
-        
-        @keyframes flame {
-            0% { height: 15px; opacity: 0.8; }
-            100% { height: 25px; opacity: 1; }
-        }
-        
-        /* Preloader Meteors */
-        .preloader-meteor {
-            position: absolute;
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, transparent, #ff7be5, #8a54d0);
-            border-radius: 50%;
-            z-index: 2;
-            opacity: 0;
-            animation: preloader-meteor 3s linear infinite;
-        }
-        
-        @keyframes preloader-meteor {
-            0% { 
-                opacity: 0;
-                transform: translate(0, 0) rotate(45deg); 
-            }
-            10% { 
-                opacity: 0.8;
-                transform: translate(-400px, 400px) rotate(45deg); 
-            }
-            100% { 
-                opacity: 0;
-            }
-        }
-        
-        .gradient-text {
-            background: linear-gradient(45deg, #ff7be5, #8a54d0, #5b8cff, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 300% 300%;
-            animation: gradient 8s ease infinite;
-        }
-        
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-           100% { background-position: 0% 50%; }
-        }
-        
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translatey(0px); }
-            50% { transform: translatey(-20px); }
-            100% { transform: translatey(0px); }
-        }
-        
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 5s infinite;
-        }
-        
-        @keyframes twinkle {
-            0% { opacity: 0; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.3); }
-            100% { opacity: 0; transform: scale(1); }
-        }
-        
-        .portfolio-item {
-            transition: all 0.4s ease;
-            transform-style: preserve-3d;
-        }
-        
-        .portfolio-item:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        
-        .nav-link {
-            position: relative;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(45deg, #ff7be5, #8a54d0);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        /* Celestial bodies - positioned in different sections */
-        .celestial-body {
-            position: absolute;
-            border-radius: 50%;
-            z-index: 1;
-            pointer-events: none;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
-            opacity: 0.8;
-            backdrop-filter: blur(2px);
-            transition: transform 0.5s ease-out;
-        }
-        
-        /* Moon in home section */
-        #home-moon {
-        position: absolute;
-        top: 20%;
-        right: 10%;
-        width: 120px;
-        height: 120px;
-        background: radial-gradient(circle, #f4f1c9 40%, #e0dba3 70%, #b6b27d 90%);
-        border-radius: 50%;
-        box-shadow: 0 0 30px rgba(255, 255, 200, 0.8);
-        z-index: 1;
-        animation: moonOrbit 20s linear infinite;
-      }
-
-      /* Keyframe for moon orbit animation */
-      @keyframes moonOrbit {
-        0% {
-          transform: rotate(0deg) translateX(50px) rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg) translateX(50px) rotate(-360deg);
-        }
-      }
-        
-        /* Rocket animation around moon */
-        .moon-rocket {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            z-index: 2;
-            top: 18%;
-            right: 40px;
-            animation: orbit-moon 15s linear infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes orbit-moon {
-            0% { transform: rotate(0deg) translateX(140px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
-        }
-        
-        /* Sun in skills section - extending to portfolio */
-        #skills-sun {
-            width: 320px;
-            height: 320px;
-            background: radial-gradient(circle, #f1c40f 0%, #e67e22 60%, #d35400 100%);
-            box-shadow: 0 0 60px rgba(230, 126, 34, 0.6), 0 0 100px rgba(231, 76, 60, 0.4);
-            top: -80px;
-            left: -45px;
-            z-index: 1;
-
-            /* Sun pulse animation */
-            animation: sun-pulse 3s ease-in-out infinite;
-        }
-
-        /* Sun pulse keyframes */
-        @keyframes sun-pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-        
-        /* Saturn in portfolio section - lower right */
-        #portfolio-saturn {
-            width: 220px;
-            height: 220px;
-            background: radial-gradient(circle, #e67e22 0%, #d35400 60%, #a84300 100%);
-            box-shadow: 0 0 40px rgba(230, 126, 34, 0.6);
-            bottom: 100px;
-            right: -60px;
-        }
-        
-        /* Saturn's rings */
-        .saturn-rings {
-            position: absolute;
-            width: 320px;
-            height: 35px;
-            background: linear-gradient(to bottom, 
-                rgba(210, 180, 140, 0.7) 0%, 
-                rgba(210, 180, 140, 0.8) 40%,
-                rgba(210, 180, 140, 0.6) 60%,
-                rgba(210, 180, 140, 0.4) 100%);
-            border-radius: 10px;
-            bottom: 210px;
-            right: -110px;
-            transform: rotate(15deg);
-            z-index: 0;
-            opacity: 0.8;
-            backdrop-filter: blur(2px);
-        }
-        
-        /* ================================
-   Falling Asteroids - Rocky Shapes
-================================ */
-.asteroid-field {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden; /* Keeps asteroids inside screen */
-}
-
-.asteroid {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-
-    /* Rocky texture with depth */
-    background: radial-gradient(circle at 30% 30%, #d9d9d9 0%, #a1a1a1 50%, #5c5c5c 100%);
-    box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.4),
-                inset 4px 4px 6px rgba(255, 255, 255, 0.2),
-                0 0 12px rgba(180, 180, 180, 0.4);
-    opacity: 0.95;
-
-    /* Irregular rocky shape */
-    clip-path: polygon(
-        25% 10%, 45% 5%, 70% 20%, 90% 40%, 
-        80% 70%, 60% 85%, 35% 80%, 15% 60%, 
-        5% 35%, 15% 20%
-    );
-
-    animation: asteroid-fall 12s linear infinite;
-    transform-origin: center;
-}
-
-/* Falling motion with rotation */
-@keyframes asteroid-fall {
-    0% {
-        transform: translateY(-60px) translateX(0px) rotate(0deg) scale(0.7);
-        opacity: 0.8;
-    }
-    50% {
-        transform: translateY(50vh) translateX(40px) rotate(180deg) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(110vh) translateX(-40px) rotate(360deg) scale(0.8);
-        opacity: 0;
-    }
-}
-
-        
-        /* Earth in contact section - lower middle left */
-        #contact-earth {
-            width: 220px;
-            height: 220px;
-            background: radial-gradient(circle, #4ecdc4 0%, #44a08d 60%, #0b6e65 100%);
-            box-shadow: 0 0 40px rgba(78, 205, 196, 0.6);
-            bottom: 50px;
-            left: 50px;
-        }
-        
-        /* Earth continents */
-        .earth-continent {
-            position: absolute;
-            background: rgba(76, 175, 80, 0.5);
-            border-radius: 30% 70% 50% 50% / 30% 30% 70% 70%;
-            z-index: 2;
-            backdrop-filter: blur(1px);
-        }
-        
-        .continent-1 {
-            width: 50px;
-            height: 35px;
-            top: calc(100% - 150px);
-            left: 100px;
-        }
-        
-        .continent-2 {
-            width: 40px;
-            height: 25px;
-            top: calc(100% - 120px);
-            left: 140px;
-        }
-        
-        .continent-3 {
-            width: 45px;
-            height: 30px;
-            top: calc(100% - 170px);
-            left: 170px;
-        }
-        
-        /* Satellite around Earth */
-        .satellite {
-            position: absolute;
-            width: 20px;
-            height: 8px;
-            background: #aaa;
-            border-radius: 4px;
-            z-index: 2;
-            bottom: 150px;
-            left: 150px;
-            animation: orbit-earth 12s linear infinite;
-            pointer-events: none;
-        }
-        
-        .satellite::before {
-            content: '';
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #7ec8e3;
-            border-radius: 50%;
-            top: 2px;
-            left: 3px;
-        }
-        
-        .satellite::after {
-            content: '';
-            position: absolute;
-            width: 2px;
-            height: 12px;
-            background: #aaa;
-            top: -6px;
-            left: 9px;
-        }
-        
-        @keyframes orbit-earth {
-            0% { transform: rotate(0deg) translateX(90px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
-        }
-        
-        /* Content z-index to appear above celestial bodies */
-        .content-z {
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* Cartoon Skill bubbles */
-        .skill-bubble {
-            background: rgba(138, 84, 208, 0.3);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 123, 229, 0.5);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-        }
-        
-        .skill-bubble::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            z-index: -1;
-            background: linear-gradient(45deg, #ff7be5, #8a54d0, #5b8cff, #4ecdc4);
-            border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .skill-bubble:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(138, 84, 208, 0.5);
-        }
-        
-        .skill-bubble:hover::before {
-            opacity: 1;
-        }
-        
-        .skill-bubble:hover i {
-            transform: scale(1.2) rotate(10deg);
-        }
-        
-        .skill-bubble i {
-            transition: transform 0.3s ease;
-        }
-        
-        /* Cartoon buttons */
-        .cartoon-btn {
-            border-radius: 16px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid transparent;
-            font-weight: bold;
-        }
-        
-        .cartoon-btn-primary {
-            background: linear-gradient(45deg, #ff7be5, #8a54d0);
-            box-shadow: 0 5px 15px rgba(138, 84, 208, 0.4);
-        }
-        
-        .cartoon-btn-primary:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(138, 84, 208, 0.6);
-        }
-        
-        .cartoon-btn-secondary {
-            background: transparent;
-            border: 2px solid #ff7be5;
-            box-shadow: 0 5px 15px rgba(255, 123, 229, 0.3);
-        }
-        
-        .cartoon-btn-secondary:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 123, 229, 0.5);
-            background: rgba(255, 123, 229, 0.1);
-        }
-        
-        /* Cartoon portfolio items */
-        .cartoon-portfolio-item {
-            background: rgba(138, 84, 208, 0.2);
-            border: 2px solid rgba(255, 123, 229, 0.3);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            transform-style: preserve-3d;
-        }
-        
-        .cartoon-portfolio-item:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
-            box-shadow: 0 25px 50px rgba(138, 84, 208, 0.4);
-            border-color: #ff7be5;
-        }
-        
-        /* Cartoon form elements */
-        .cartoon-input {
-            background: rgba(138, 84, 208, 0.2);
-            border: 2px solid rgba(255, 123, 229, 0.3);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            color: white;
-        }
-        
-        .cartoon-input:focus {
-            outline: none;
-            border-color: #ff7be5;
-            box-shadow: 0 0 15px rgba(255, 123, 229, 0.5);
-            background: rgba(138, 84, 208, 0.3);
-        }
-        
-        /* Shooting Stars */
-        .shooting-star {
-            position: absolute;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, #ff7be5 30%, #8a54d0 70%, rgba(255,255,255,0) 100%);
-            animation: shooting 5s infinite;
-            z-index: 0;
-            border-radius: 50%;
-        }
-        
-        @keyframes shooting {
-            0% { transform: translate(0, 0) rotate(45deg); opacity: 0; }
-            1% { opacity: 1; }
-            10% { transform: translate(500px, -500px) rotate(45deg); opacity: 0; }
-            100% { opacity: 0; }
-        }
-        
-        /* Background Stars */
-        .bg-star {
-            position: fixed;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 5s infinite;
-            z-index: 0;
-        }
-        
-        /* Section backgrounds with space theme */
-        .section-space {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        #home {
-            background: linear-gradient(to bottom, rgba(12, 12, 46, 0.9), rgba(26, 26, 58, 0.9)), 
-                        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
-        }
-        
-        #about {
-            background: 
-                linear-gradient(to bottom, rgba(12, 12, 46, 0.3), rgba(26, 26, 58, 0.3)),
-                radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 20%);
-        }
-        
-        #skills {
-            background: linear-gradient(to bottom, rgba(26, 26, 58, 0.8), rgba(45, 45, 90, 0.8)),
-                        radial-gradient(circle at 15% 85%, rgba(230, 126, 34, 0.1) 0%, transparent 25%);
-        }
-        
-        #portfolio {
-            background: linear-gradient(to bottom, rgba(45, 45, 90, 0.8), rgba(26, 26, 58, 0.8)),
-                        radial-gradient(circle at 15% 25%, rgba(230, 126, 34, 0.1) 0%, transparent 25%);
-        }
-        
-        #contact {
-            background: linear-gradient(to bottom, rgba(26, 26, 58, 0.8), rgba(12, 12, 46, 0.8)),
-                        radial-gradient(circle at 20% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 25%);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="relative">
     <!-- ======================
@@ -688,10 +16,9 @@
     ====================== -->
     <div id="loader">
       <div class="cartoon-galaxy"></div>
-      <h1 class="text-3xl font-bold gradient-text">Cosmic Designer</h1>
-      <p class="text-lg">UI/UX Designer</p>
+      <h1 class="text-6xl font-extrabold animated-gradient mb-2">Launching...</h1>
+      <p class="text-2xl font-semibold animated-gradient">UI/UX Designer</p>
       <div id="particles-container"></div>
-      
       <!-- Preloader Rocket -->
       <div class="preloader-rocket">
           <div class="rocket-body">
@@ -701,7 +28,6 @@
               <div class="rocket-flame"></div>
           </div>
       </div>
-      
       <!-- Preloader Meteors -->
       <div class="preloader-meteor" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
       <div class="preloader-meteor" style="top: 40%; left: 40%; animation-delay: 1s;"></div>
@@ -711,23 +37,37 @@
       <div class="preloader-meteor" style="top: 70%; left: 30%; animation-delay: 2.5s;"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-40 bg-opacity-90 bg-[#1a1a3a] backdrop-blur-md py-4 px-6 shadow-lg content-z">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold gradient-text">COSMIC PORTFOLIO</a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#home" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Home</a>
-                <a href="#about" class="nav-link text-white hover:text-[#ff7be5] transition-colors">About</a>
-                <a href="#skills" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Skills</a>
-                <a href="#portfolio" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Portfolio</a>
-                <a href="#contact" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Contact</a>
+        <!-- Navigation -->
+        <nav class="fixed w-full z-40 bg-opacity-90 bg-[#1a1a3a] backdrop-blur-md py-4 px-6 shadow-lg content-z">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <!-- Logo as link to CV -->
+                    <a href="Assets/EsthepheneZyrusCastro_CV.pdf" download>
+                        <img src="Assets\logo.png" alt="ESTHEPHENE ZYRUS Logo"
+                            class="nav-logo h-12 w-12 rounded-full shadow-lg border-2 border-[#ff7be5] hover:scale-110 transition-transform duration-200" />
+                    </a>
+                    <!-- Download CV button -->
+                    <a href="Assets/EsthepheneZyrusCastro_CV.pdf"
+                    download
+                    class="nav-cv-btn px-5 py-2 rounded-lg font-bold text-white bg-gradient-to-r from-[#ff7be5] via-[#8a54d0] to-[#4ecdc4] shadow-xl border-2 border-white ring-2 ring-[#ff7be5] hover:scale-110 hover:ring-4 transition-all duration-200">
+                        Download CV
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Home</a>
+                    <a href="#about" class="nav-link text-white hover:text-[#ff7be5] transition-colors">About</a>
+                    <a href="#skills" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Skills</a>
+                    <a href="#portfolio" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Portfolio</a>
+                    <a href="#contact" class="nav-link text-white hover:text-[#ff7be5] transition-colors">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
             </div>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-white">
-                    <i data-feather="menu"></i>
-                </button>
-            </div>
-        </div>
+        </nav>
+
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-[#2d2d5a] py-4 px-6 shadow-lg">
             <div class="flex flex-col space-y-4">
@@ -752,18 +92,17 @@
                 <div class="rocket-flame"></div>
             </div>
         </div>
-        
         <div class="container mx-auto px-6 z-10 text-center content-z">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6" data-aos="fade-down">
-                Hello, I'm <span class="gradient-text">Cosmic Designer</span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                Hello, I'm <span class="gradient-text">ESTHEPHENE</span>
             </h1>
-            <h2 class="text-2xl md:text-4xl mb-8" data-aos="fade-down" data-aos-delay="200">
+            <h2 class="text-2xl md:text-4xl mb-8">
                 UI/UX Designer & Space Explorer
             </h2>
-            <p class="text-xl max-w-2xl mx-auto mb-10 opacity-90" data-aos="fade-up" data-aos-delay="400">
+            <p class="text-xl max-w-2xl mx-auto mb-10 opacity-90">
                 I craft interstellar digital experiences that blend creativity with functionality
             </p>
-            <div class="flex justify-center space-x-6" data-aos="zoom-in" data-aos-delay="600">
+            <div class="flex justify-center space-x-6 home-btns">
                 <a href="#portfolio" class="px-8 py-3 cartoon-btn cartoon-btn-primary">
                     View Work
                 </a>
@@ -772,10 +111,10 @@
                 </a>
             </div>
         </div>
+        </div>
         <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce content-z">
             <i data-feather="chevron-down" class="text-white w-8 h-8"></i>
         </div>
-        
         <!-- Shooting Stars -->
         <div class="shooting-star" style="top: 15%; left: 5%; animation-delay: 2s;"></div>
         <div class="shooting-star" style="top: 40%; left: 15%; animation-delay: 5s;"></div>
@@ -789,17 +128,17 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="relative" data-aos="fade-right">
                     <div class="floating w-4/5 mx-auto">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Profile" class="rounded-2xl shadow-2xl w-full">
+                        <img src="Assets\add40f2a-76a6-457f-ad86-f12ba55deab9.jfif" alt="Profile" class="rounded-2xl shadow-2xl w-full">
                     </div>
                     <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-gradient-to-r from-[#ff7be5] to-[#8a54d0] opacity-20 blur-xl"></div>
                 </div>
                 <div data-aos="fade-left" data-aos-delay="200">
                     <h3 class="text-2xl font-semibold mb-6">Exploring Digital Universes</h3>
                     <p class="text-lg opacity-90 mb-6">
-                        With over 5 years of experience in UI/UX design, I specialize in creating intuitive and engaging digital products that users love. My approach combines user-centered design principles with cutting-edge technology.
+                        I’m a web designer and software developer who loves bringing ideas to life through clean UI and seamless UX. For me, crafting interfaces is like mapping constellations—every element connects with purpose to create something meaningful and easy to navigate.
                     </p>
                     <p class="text-lg opacity-90 mb-8">
-                        I believe that great design is not just about how things look, but how they work and feel. Every pixel, interaction, and animation serves a purpose in creating memorable experiences.
+                        Whether it’s building with HTML, CSS, and Javascript, or designing prototypes in Figma, I enjoy blending creativity with code to design experiences that feel simple, engaging, and out of this world. 🌌
                     </p>
                     <div class="flex space-x-4">
                         <div class="flex items-center space-x-2">
@@ -818,7 +157,6 @@
                 </div>
             </div>
         </div>
-        
         <!-- Shooting Stars -->
         <div class="asteroid-field"></div>
     </section>
@@ -827,16 +165,6 @@
     <section id="skills" class="relative z-10 py-20 px-4 md:px-12 section-space">
         <!-- Sun in skills section - extending to portfolio -->
         <div id="skills-sun" class="celestial-body"></div>
-
-        <!-- Solar flares scattered around the sun -->
-        <div class="solar-flare" style="top: 25%; left: 8%; animation-delay: 0s;"></div>
-        <div class="solar-flare" style="top: 30%; left: 5%; transform: rotate(45deg); animation-delay: 1s;"></div>
-        <div class="solar-flare" style="top: 20%; left: 11%; transform: rotate(80deg); animation-delay: 2s;"></div>
-        <div class="solar-flare" style="top: 15%; left: 7%; transform: rotate(120deg); animation-delay: 3s;"></div>
-        <div class="solar-flare" style="top: 35%; left: 3%; transform: rotate(20deg); animation-delay: 4s;"></div>
-        <div class="solar-flare" style="top: 10%; left: 12%; transform: rotate(100deg); animation-delay: 5s;"></div>
-        <div class="solar-flare" style="top: 40%; left: 6%; transform: rotate(60deg); animation-delay: 6s;"></div>
-        
         <div class="max-w-6xl mx-auto content-z" data-aos="fade-up">
             <h2 class="text-4xl font-bold text-white text-center mb-16">My <span class="gradient-text">Skill Galaxy</span></h2>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -885,7 +213,6 @@
         <div class="meteor" style="top: 25%; left: 25%; animation-delay: 2s;"></div>
         <div class="meteor" style="top: 30%; left: 30%; animation-delay: 4s;"></div>
         <div class="meteor" style="top: 22%; left: 22%; animation-delay: 6s;"></div>
-        
         <div class="container mx-auto px-6 content-z">
             <h2 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-down">My Portfolio</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -904,7 +231,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Portfolio Item 2 -->
                 <div class="cartoon-portfolio-item overflow-hidden" data-aos="zoom-in" data-aos-delay="200">
                     <div class="h-48 overflow-hidden">
@@ -920,7 +246,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Portfolio Item 3 -->
                 <div class="cartoon-portfolio-item overflow-hidden" data-aos="zoom-in" data-aos-delay="400">
                     <div class="h-48 overflow-hidden">
@@ -948,7 +273,6 @@
         <div class="earth-continent continent-2"></div>
         <div class="earth-continent continent-3"></div>
         <div class="satellite"></div>
-        
         <div class="container mx-auto px-6 content-z">
             <h2 class="text-4xl font-bold text-center mb-16 gradient-text" data-aos="fade-down">Get In Touch</h2>
             <div class="grid md:grid-cols-2 gap-12">
@@ -964,7 +288,7 @@
                             </div>
                             <div>
                                 <p class="font-semibold">Email</p>
-                                <p class="opacity-90">space.designer@example.com</p>
+                                <p class="opacity-90">esthephenecastro@gmail.com</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
@@ -973,7 +297,7 @@
                             </div>
                             <div>
                                 <p class="font-semibold">Phone</p>
-                                <p class="opacity-90">+1 (234) 567-8901</p>
+                                <p class="opacity-90">+63 916 785 1032</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
@@ -982,38 +306,35 @@
                             </div>
                             <div>
                                 <p class="font-semibold">Location</p>
-                                <p class="opacity-90">Orbiting Earth</p>
+                                <p class="opacity-90">Manila, Philippines</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex space-x-4 mt-8">
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#ff7be5] transition-colors">
+                        <a href="https://github.com/starrboiii07" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#ff7be5] transition-colors">
                             <i data-feather="github" class="text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#8a54d0] transition-colors">
-                            <i data-feather="dribbble" class="text-white"></i>
+                        <a href="https://www.facebook.com/esthephene.castro" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#8a54d0] transition-colors">
+                            <i data-feather="facebook" class="text-white"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#4ecdc4] transition-colors">
+                        <a href="https://www.linkedin.com/in/esthephene-castro-046983198" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#4ecdc4] transition-colors">
                             <i data-feather="linkedin" class="text-white"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-[#2d2d5a] flex items-center justify-center hover:bg-[#96ceb4] transition-colors">
-                            <i data-feather="twitter" class="text-white"></i>
                         </a>
                     </div>
                 </div>
                 <div data-aos="fade-left" data-aos-delay="200">
-                    <form class="bg-[#2d2d5a] p-8 rounded-2xl shadow-lg">
+                    <form id="contact-form" class="bg-[#2d2d5a] p-8 rounded-2xl shadow-lg">
                         <div class="mb-6">
                             <label for="name" class="block mb-2 font-medium">Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 cartoon-input focus:outline-none" placeholder="Your name">
+                            <input type="text" id="name" name="user_name" required class="w-full px-4 py-3 cartoon-input focus:outline-none" placeholder="Your name">
                         </div>
                         <div class="mb-6">
                             <label for="email" class="block mb-2 font-medium">Email</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 cartoon-input focus:outline-none" placeholder="Your email">
+                            <input type="email" id="email" name="user_email" required class="w-full px-4 py-3 cartoon-input focus:outline-none" placeholder="Your email">
                         </div>
                         <div class="mb-6">
                             <label for="message" class="block mb-2 font-medium">Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-3 cartoon-input focus:outline-none" placeholder="Your message"></textarea>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 cartoon-input focus:outline-none" placeholder="Your message"></textarea>
                         </div>
                         <button type="submit" class="w-full px-6 py-3 cartoon-btn cartoon-btn-primary">
                             Send Message
@@ -1024,138 +345,9 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-10 bg-[#0a0a2a] text-center content-z">
-        <div class="container mx-auto px-6">
-            <p class="opacity-90">© 2023 Space Designer. All rights reserved.</p>
-        </div>
-    </footer>
-
     <!-- Scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create particles for preloader
-            const particlesContainer = document.getElementById('particles-container');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.width = Math.random() * 5 + 2 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
-                particlesContainer.appendChild(particle);
-            }
-            
-            // Create background stars
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.classList.add('bg-star');
-                star.style.width = Math.random() * 3 + 'px';
-                star.style.height = star.style.width;
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 5 + 's';
-                star.style.animationDuration = Math.random() * 3 + 3 + 's';
-                document.body.appendChild(star);
-            }
-            
-            // Scroll-based rotation for celestial bodies
-            function handleScroll() {
-                const scrollY = window.scrollY;
-                const windowHeight = window.innerHeight;
-                const documentHeight = document.documentElement.scrollHeight;
-                
-                // Calculate rotation based on scroll position
-                const rotation = scrollY / (documentHeight - windowHeight) * 360;
-                
-                // Apply rotation to celestial bodies
-               document.querySelectorAll('.celestial-body').forEach(body => {
-                if (body.id !== 'home-moon') {  // Skip the moon
-                    body.style.transform = `rotate(${rotation}deg)`;
-                }
-            });
-            }
-            
-            window.addEventListener('scroll', handleScroll);
-            
-            // Hide preloader after 3 seconds
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 3000);
-            
-            // Initialize AOS
-            AOS.init({
-                duration: 1000,
-                once: true,
-                easing: 'ease-in-out'
-            });
-            
-            // Mobile menu toggle
-            document.getElementById('mobile-menu-button').addEventListener('click', function() {
-                const menu = document.getElementById('mobile-menu');
-                menu.classList.toggle('hidden');
-            });
-            
-            // Close mobile menu when clicking a link
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    document.getElementById('mobile-menu').classList.add('hidden');
-                });
-            });
-            
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-            
-            // Replace feather icons
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-        const asteroidField = document.querySelector('.asteroid-field');
-
-        function createAsteroid() {
-            const asteroid = document.createElement('div');
-            asteroid.classList.add('asteroid');
-
-            // Random horizontal position
-            asteroid.style.left = Math.random() * 100 + '%';
-
-            // Random size
-            const size = 30 + Math.random() * 60; // between 30px and 90px
-            asteroid.style.width = `${size}px`;
-            asteroid.style.height = `${size}px`;
-
-            // Random speed
-            asteroid.style.animationDuration = (10 + Math.random() * 8) + 's';
-
-            // Random rotation direction
-            asteroid.style.animationDirection = Math.random() > 0.5 ? 'normal' : 'reverse';
-
-            asteroidField.appendChild(asteroid);
-
-            // Clean up after animation
-            setTimeout(() => {
-                asteroid.remove();
-            }, 20000);
-        }
-
-        // Spawn a new asteroid every 2 seconds
-        setInterval(createAsteroid, 2000);
-    });
-    </script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="main.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
