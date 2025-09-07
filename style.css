@@ -232,6 +232,15 @@
             -webkit-text-fill-color: transparent;
             background-size: 300% 300%;
             animation: gradient 8s ease infinite;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            }
+
+            @media (min-width: 768px) {
+            .gradient-text {
+                font-size: 4.5rem;
+            }
         }
         
         @keyframes gradient {
@@ -274,20 +283,22 @@
         }
 
         .nav-logo {
-        box-shadow: 0 4px 16px rgba(255, 123, 229, 0.3), 0 1.5px 8px rgba(138, 84, 208, 0.15);
-        transition: transform 0.2s, box-shadow 0.2s;
+        height: 2.5rem;
+        width: 2.5rem;
         }
-        .nav-logo:hover {
-        transform: scale(1.12) rotate(-6deg);
-        box-shadow: 0 8px 24px rgba(255, 123, 229, 0.5), 0 3px 16px rgba(138, 84, 208, 0.25);
+        @media (min-width: 768px) {
+        .nav-logo {
+            height: 3rem;
+            width: 3rem;
+        }
         }
         .nav-cv-btn {
-        font-size: 1.1rem;
+        font-size: 1rem;
         letter-spacing: 0.02em;
         background: linear-gradient(90deg, #8a54d0, #ff7be5);
         color: #fff;
         border-radius: 0.75rem;
-        padding: 0.5rem 1.5rem;
+        padding: 0.5rem 1.2rem;
         border: 2px solid #fff;
         box-shadow: 0 2px 8px rgba(138, 84, 208, 0.15);
         transition:
@@ -307,6 +318,12 @@
         box-shadow: 0 4px 16px rgba(255, 123, 229, 0.25);
         transform: translateY(-2px) scale(1.08);
         outline: none;
+        }
+        @media (min-width: 768px) {
+        .nav-cv-btn {
+            font-size: 1.1rem;
+            padding: 0.5rem 1.5rem;
+        }
         }
         
         .nav-link {
@@ -812,9 +829,10 @@
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
-            padding-left: 2vw;
-            padding-right: 2vw;
+            padding-left: 4vw;
+            padding-right: 4vw;
             box-sizing: border-box;
+            transition: max-width 0.3s, padding 0.3s;
         }
 
         @media (max-width: 1200px) {
@@ -830,8 +848,8 @@
             section > .container,
             section > .max-w-6xl {
                 max-width: 700px;
-                padding-left: 4vw;
-                padding-right: 4vw;
+                padding-left: 5vw;
+                padding-right: 5vw;
             }
         }
 
@@ -839,11 +857,13 @@
             section > .container,
             section > .max-w-6xl {
                 max-width: 100vw;
-                padding-left: 1vw;
-                padding-right: 1vw;
+                padding-left: 2vw;
+                padding-right: 2vw;
             }
         }
 
+        /* ...existing code... */
+        
         /* Ensure sections start below the fixed header */
         nav {
             position: fixed;
@@ -906,16 +926,18 @@
             }
         }
 
+        /* Remove or comment out this block:
         section > .container,
         section > .max-w-6xl {
             opacity: 0;
             transform: translateY(40px) scale(0.98);
             transition: opacity 0.7s cubic-bezier(.77,0,.18,1), transform 0.7s cubic-bezier(.77,0,.18,1);
         }
+        */
         section.section-animate > .max-w-6xl {
             opacity: 1;
             transform: translateY(0) scale(1);
-}
+        }
 
         section.section-animate > .container,
         section.section-animate > .max-w-6xl {
@@ -958,3 +980,197 @@
             max-width: 100% !important;
         }
         }
+        #mobile-menu {
+        transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+        }
+        #mobile-menu.open {
+        transform: translateX(0);
+        }
+        #mobile-menu {
+        transform: translateX(100%);
+        }
+
+        /* Preloader Meteors */
+        .preloader-meteor-1 { top: 20%; left: 20%; animation-delay: 0s; }
+        .preloader-meteor-2 { top: 40%; left: 40%; animation-delay: 1s; }
+        .preloader-meteor-3 { top: 60%; left: 60%; animation-delay: 2s; }
+        .preloader-meteor-4 { top: 80%; left: 10%; animation-delay: 0.5s; }
+        .preloader-meteor-5 { top: 30%; left: 80%; animation-delay: 1.5s; }
+        .preloader-meteor-6 { top: 70%; left: 30%; animation-delay: 2.5s; }
+
+        /* Shooting Stars */
+        .shooting-star-1 { top: 15%; left: 5%; animation-delay: 2s; }
+        .shooting-star-2 { top: 40%; left: 15%; animation-delay: 5s; }
+        .shooting-star-3 { top: 70%; left: 25%; animation-delay: 8s; }
+
+        /* Portfolio Meteors */
+        .meteor-1 { top: 20%; left: 20%; animation-delay: 0s; }
+        .meteor-2 { top: 25%; left: 25%; animation-delay: 2s; }
+        .meteor-3 { top: 30%; left: 30%; animation-delay: 4s; }
+        .meteor-4 { top: 22%; left: 22%; animation-delay: 6s; }
+
+        /* Responsive Navigation Menu - Sliding Animation */
+.nav-menu {
+    position: fixed;
+    top: 72px; /* below nav bar */
+    right: 0;
+    width: 80vw;
+    max-width: 340px;
+    height: calc(100vh - 72px);
+    background: rgba(26, 26, 58, 0.98);
+    box-shadow: -8px 0 32px rgba(0,0,0,0.18);
+    transform: translateX(100%);
+    opacity: 0;
+    transition:
+        transform 0.45s cubic-bezier(.77,0,.18,1),
+        opacity 0.3s cubic-bezier(.4,0,.2,1);
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+}
+
+.nav-menu.open {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+@media (min-width: 768px) {
+    .nav-menu {
+        position: static !important;
+        width: auto !important;
+        max-width: none !important;
+        height: auto !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        flex-direction: row !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+}
+
+/* Hide hamburger on desktop */
+@media (min-width: 768px) {
+    #nav-toggle {
+        display: none;
+    }
+}
+
+/* 1. Disable scroll snap and adjust section sizing on small screens */
+@media (max-width: 640px) {
+    html, body {
+        scroll-snap-type: none !important;
+    }
+    section {
+        scroll-snap-align: none !important;
+        min-height: unset !important;
+        height: auto !important;
+        padding-top: 52px !important;
+        display: block !important;
+        background: none !important;
+        box-shadow: none !important;
+    }
+    section > .container,
+    section > .max-w-6xl {
+        background: none !important;
+        box-shadow: none !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    /* Restore original font size for gradient-text and highlights */
+    .gradient-text,
+    .hero-name,
+    .highlight {
+        font-size: 2.2rem !important;
+        font-weight: bold;
+        line-height: 1.1;
+        letter-spacing: 0.02em;
+        display: inline-block;
+    }
+    /* Optionally, adjust skill gallery titles if needed */
+    .skill-title {
+        font-size: 1.3rem !important;
+        font-weight: 600;
+    }
+}
+
+/* 2. Responsive text scaling for larger screens */
+@media (min-width: 1200px) {
+    section h1 { font-size: 3.5rem; }
+    section h2 { font-size: 2.2rem; }
+    section p, section li, section span, section label, section input, section textarea, section button {
+        font-size: 1.25rem;
+    }
+}
+
+/* 3. Responsive image sizing */
+section img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 900px) {
+    section img {
+        max-width: 80vw;
+        border-radius: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    section img {
+        max-width: 98vw;
+        border-radius: 0.75rem;
+    }
+}
+
+/* 4. Make sure containers are always fluid and readable */
+section > .container,
+section > .max-w-6xl {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    box-sizing: border-box;
+    transition: max-width 0.3s, padding 0.3s;
+}
+
+@media (max-width: 1200px) {
+    section > .container,
+    section > .max-w-6xl {
+        max-width: 1000px;
+        padding-left: 3vw;
+        padding-right: 3vw;
+    }
+}
+
+@media (max-width: 900px) {
+    section > .container,
+    section > .max-w-6xl {
+        max-width: 700px;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
+
+@media (max-width: 640px) {
+    section > .container,
+    section > .max-w-6xl {
+        max-width: 100vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+}
