@@ -8,7 +8,6 @@ window.addEventListener('load', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Create particles for preloader
     const particlesContainer = document.getElementById('particles-container');
     for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         particlesContainer.appendChild(particle);
     }
 
-    // Create background stars
     for (let i = 0; i < 100; i++) {
         const star = document.createElement('div');
         star.classList.add('bg-star');
@@ -34,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(star);
     }
 
-    // Scroll-based rotation for celestial bodies
     function handleScroll() {
         const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
@@ -48,32 +45,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     window.addEventListener('scroll', handleScroll);
 
-    // Hide preloader after 3 seconds
     setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
+        startHomeObserver();
     }, 3000);
 
-    // Initialize AOS
     AOS.init({
         duration: 1000,
         once: false,
         easing: 'ease-in-out'
     });
 
-    // Mobile menu toggle
     document.getElementById('mobile-menu-button').addEventListener('click', function() {
         const menu = document.getElementById('mobile-menu');
         menu.classList.toggle('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Close mobile menu when clicking a link
     document.querySelectorAll('#mobile-menu a').forEach(link => {
         link.addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.add('hidden');
         });
     });
 
-    // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -87,32 +81,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Replace feather icons
     if (typeof feather !== 'undefined') {
         feather.replace();
     }
 
-    // Snap scroll animation reset logic
     const sections = document.querySelectorAll('section');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             entry.target.classList.remove('section-animate');
-            // Remove bubble animation for skills section
             if (entry.target.id === 'skills') {
                 entry.target.querySelectorAll('.skill-bubble').forEach(bubble => {
                     bubble.classList.remove('bubble-animate');
                 });
             }
-            void entry.target.offsetWidth; // Force reflow
+            void entry.target.offsetWidth;
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.classList.add('section-animate');
-                    // Add bubble animation for skills section
                     if (entry.target.id === 'skills') {
                         entry.target.querySelectorAll('.skill-bubble').forEach((bubble, i) => {
                             setTimeout(() => {
                                 bubble.classList.add('bubble-animate');
-                            }, i * 100); // Stagger animation
+                            }, i * 100);
                         });
                     }
                 }, 50);
@@ -122,9 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
         threshold: 0.5
     });
     sections.forEach(section => observer.observe(section));
-});
 
-document.addEventListener('DOMContentLoaded', function() {
     const asteroidField = document.querySelector('.asteroid-field');
     function createAsteroid() {
         const asteroid = document.createElement('div');
@@ -144,10 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const homeSection = document.getElementById('home');
     const homeText = homeSection.querySelector('.container');
-    let homeObserver;
-
     function startHomeObserver() {
-        homeObserver = new IntersectionObserver((entries) => {
+        const homeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 homeText.classList.remove('home-animate');
                 if (entry.isIntersecting) {
@@ -159,11 +145,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { threshold: 0.5 });
         homeObserver.observe(homeSection);
     }
-
-    // Hide preloader after 3 seconds and then start home animation observer
-    setTimeout(() => {
-        document.getElementById('loader').classList.add('hidden');
-        startHomeObserver();
-    }, 3000);
-
 });

@@ -289,11 +289,18 @@
         border-style: solid;
         border-color: #fff;
         outline: none;
-        transition: transform 0.2s, box-shadow 0.2s, ring 0.2s;
+        transition: 
+            transform 0.2s, 
+            box-shadow 0.2s, 
+            ring 0.2s, 
+            background 0.2s, 
+            color 0.2s;
         }
         .nav-cv-btn:hover, .nav-cv-btn:focus {
         transform: scale(1.12) translateY(-2px);
         box-shadow: 0 8px 32px rgba(255, 123, 229, 0.35), 0 3px 16px rgba(138, 84, 208, 0.18);
+        background: linear-gradient(90deg, #4ecdc4, #ff7be5, #8a54d0);
+        color: #ff7be5;
         }
         
         .nav-link {
@@ -933,11 +940,8 @@
             background: none !important;
             box-shadow: none !important;
         }
-        section > .container,
-        section > .max-w-6xl {
-            min-height: unset !important;
-            height: auto !important;
-            display: block !important;
+          section > .container,
+          section > .max-w-6xl {
             background: none !important;
             box-shadow: none !important;
             padding-left: 0 !important;
